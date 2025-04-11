@@ -6,4 +6,5 @@
     <string name="signup_passowrd">비밀번호를 입력해주세요.</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_my">MyActivity</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
 </resources>

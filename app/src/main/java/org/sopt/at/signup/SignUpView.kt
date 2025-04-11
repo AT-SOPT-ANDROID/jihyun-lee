@@ -1,4 +1,4 @@
-package org.sopt.at.signin
+package org.sopt.at.signup
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
@@ -17,6 +16,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,13 +31,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import org.sopt.at.R
 
+
 @Composable
-fun IdInputView(modifier:Modifier=Modifier){
+fun IdInputView(navController: NavController){
+    var userId by remember { mutableStateOf("") }
+
     Surface (
         color = Color.Black,
-        modifier = modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize()
     ) {
         Column (
             modifier = Modifier.padding(top=25.dp, start = 15.dp, end = 15.dp, bottom = 25.dp)
@@ -62,7 +71,7 @@ fun IdInputView(modifier:Modifier=Modifier){
 
             TextField(
                 value = "",
-                onValueChange = {},
+                onValueChange = { userId = it },
                 placeholder = {Text("아이디", color = colorResource(R.color.login_textField_text))},
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.colors(
@@ -83,8 +92,11 @@ fun IdInputView(modifier:Modifier=Modifier){
                 contentAlignment = Alignment.BottomCenter
             ){
                 OutlinedButton(
-                    onClick = {},
-                    modifier = modifier.fillMaxWidth().height(50.dp),
+                    onClick = {
+                        navController.currentBackStackEntry?.arguments?.putString("userId", userId)
+                        navController.navigate("pwInput")
+                    },
+                    modifier = Modifier.fillMaxWidth().height(50.dp),
                     colors = ButtonDefaults.outlinedButtonColors(
                         containerColor = Color.Transparent,
                         
@@ -103,10 +115,12 @@ fun IdInputView(modifier:Modifier=Modifier){
 }
 
 @Composable
-fun PasswordInputView(modifier:Modifier=Modifier){
+fun PasswordInputView(navController: NavController){
+    var password by remember { mutableStateOf("") }
+
     Surface (
         color = Color.Black,
-        modifier = modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize()
     ) {
         Column (
             modifier = Modifier.padding(top=25.dp, start = 15.dp, end = 15.dp, bottom = 25.dp)
@@ -134,7 +148,7 @@ fun PasswordInputView(modifier:Modifier=Modifier){
 
             TextField(
                 value = "",
-                onValueChange = {},
+                onValueChange = { password = it },
                 placeholder = {Text("비밀번호", color = colorResource(R.color.login_textField_text))},
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.colors(
@@ -155,8 +169,18 @@ fun PasswordInputView(modifier:Modifier=Modifier){
                 contentAlignment = Alignment.BottomCenter
             ){
                 OutlinedButton(
-                    onClick = {},
-                    modifier = modifier.fillMaxWidth().height(50.dp),
+                    onClick = {
+                        val userId = navController.currentBackStackEntry?.arguments?.getString("userId")
+                        if (userId != null && password != null){
+                            SignUp(userId, password)
+                            (navController.context as SignUpActivity).navigateToSignInActivity()
+                        }
+//                        val context = navController.context
+//                        if(context is SignUpActivity){
+//                            context.navigateToSignInActivity()
+//                        }
+                    },
+                    modifier = Modifier.fillMaxWidth().height(50.dp),
                     colors = ButtonDefaults.outlinedButtonColors(
                         containerColor = Color.Transparent,
 
@@ -174,14 +198,20 @@ fun PasswordInputView(modifier:Modifier=Modifier){
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun showIdInputView(){
-    IdInputView()
+fun SignUp(userId:String, password:String){
+
 }
 
 @Preview(showBackground = true)
 @Composable
-fun showPasswordInputView(){
-    PasswordInputView()
+fun showIdInput(){
+    val navController = rememberNavController()
+    IdInputView(navController)
+}
+
+@Preview(showBackground = true)
+@Composable
+fun showPwInput(){
+    val navController = rememberNavController()
+    PasswordInputView(navController)
 }

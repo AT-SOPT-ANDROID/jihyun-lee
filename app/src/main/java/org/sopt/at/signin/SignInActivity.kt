@@ -1,31 +1,33 @@
 package org.sopt.at.signin
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Snackbar
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import org.sopt.at.my.MyActivity
 import org.sopt.at.ui.theme.ATSOPTANDROIDTheme
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.runtime.mutableStateOf
 
-class SingInActivity : ComponentActivity() {
+class SignInActivity : ComponentActivity() {
+
+    private lateinit var snackbarHostState: SnackbarHostState
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+
         setContent {
             ATSOPTANDROIDTheme {
-                Scaffold(
-                    modifier = Modifier.fillMaxSize(),
-                    contentColor = Color.Black
-                ) { innerPadding ->
-                    LogInView(Modifier.padding(innerPadding))
-                }
+                LogInView()
             }
         }
     }
