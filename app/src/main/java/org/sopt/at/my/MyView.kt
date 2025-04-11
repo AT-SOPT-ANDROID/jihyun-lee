@@ -1,5 +1,8 @@
 package org.sopt.at.my
 
+import android.content.Context
+import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -23,12 +26,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.sopt.at.R
+import org.sopt.at.signin.SignInActivity
 
 @Composable
 fun MyView(userId: String = "프로필"){
@@ -337,8 +342,22 @@ fun MyView(userId: String = "프로필"){
                 )
             }
 
+            val context = LocalContext.current
             OutlinedButton(
-                onClick = {},
+                onClick = {
+                    // 로그인 정보 제거
+                    val sharedPref = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+                    with(sharedPref.edit()) {
+                        clear() // 모든 저장값 제거
+                        apply()
+                    }
+                    Toast.makeText(context, "로그아웃 되었습니다", Toast.LENGTH_SHORT).show()
+
+                    // 로그인 화면으로 이동
+                    val intent = Intent(context, SignInActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    context.startActivity(intent)
+                },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Transparent
                 ),
