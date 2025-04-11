@@ -31,10 +31,10 @@ import androidx.compose.ui.unit.dp
 import org.sopt.at.R
 
 @Composable
-fun MyView(modifier: Modifier = Modifier){
+fun MyView(userId: String = "프로필"){
     val scrollState = rememberScrollState()
     Surface (
-        modifier = modifier.verticalScroll(scrollState),
+        modifier = Modifier.verticalScroll(scrollState),
         color = Color.Black,
     ) {
         Column (
@@ -85,7 +85,7 @@ fun MyView(modifier: Modifier = Modifier){
                 )
 
                 Text(
-                    text = "프로필",
+                    text = userId,
                     color = Color.White
                 )
 
@@ -356,5 +356,5 @@ fun MyView(modifier: Modifier = Modifier){
 @Preview(showBackground = true)
 @Composable
 fun ShowMyView(){
-    MyView(Modifier.fillMaxSize())
+    MyView("userId")
 }

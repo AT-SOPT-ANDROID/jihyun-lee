@@ -8,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.*
+import androidx.navigation.navArgument
 import org.sopt.at.signin.SignInActivity
 
 class SignUpActivity : ComponentActivity() {
@@ -18,7 +19,15 @@ class SignUpActivity : ComponentActivity() {
             val navController = rememberNavController()
             NavHost(navController = navController, startDestination = "idInput"){
                 composable("idInput") {IdInputView(navController)}
-                composable("pwInput") {PasswordInputView(navController)}
+                composable(
+                    "pwInput?userId={userId}",
+                    arguments = listOf(navArgument("userId"){
+                        defaultValue = ""
+                    })
+                ) { backStackEntry -> 
+                    val userId = backStackEntry.arguments?.getString("userId")
+                    PasswordInputView(navController, userId.orEmpty())
+                }
             }
         }
     }

@@ -1,5 +1,6 @@
 package org.sopt.at.signin
 
+import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -59,6 +60,9 @@ fun LogInView() {
     var password = ""
 
     val context = LocalContext.current
+    val sharedPref = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+    val savedUserId = sharedPref.getString("userId", null)
+    val savedPassword = sharedPref.getString("password", null)
 
     Surface (
         color = Color.Black,
@@ -134,12 +138,13 @@ fun LogInView() {
                 Button(
                     onClick = {
                         // 로그인 처리
-                        if (userId == "user123" && password == "password123") {
+                        if (userId == savedUserId && password == savedPassword) {
                             // 로그인 성공 시 Toast 메시지
                             Toast.makeText(context, "로그인 성공!", Toast.LENGTH_SHORT).show()
 
                             // MyActivity로 이동
                             val intent = Intent(context, MyActivity::class.java)
+                            intent.putExtra("userId", userId)
                             context.startActivity(intent)
                         } else {
                             // 로그인 실패 시 Toast 메시지

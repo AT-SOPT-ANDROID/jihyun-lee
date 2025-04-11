@@ -1,5 +1,6 @@
 package org.sopt.at.signup
 
+import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -120,7 +121,7 @@ fun IdInputView(navController: NavController){
 }
 
 @Composable
-fun PasswordInputView(navController: NavController){
+fun PasswordInputView(navController: NavController, userId: String){
     var password by remember { mutableStateOf("") }
     val context = LocalContext.current
 
@@ -176,9 +177,8 @@ fun PasswordInputView(navController: NavController){
             ){
                 OutlinedButton(
                     onClick = {
-                        val userId = navController.currentBackStackEntry?.arguments?.getString("userId")
                         if (userId != null && password != null){
-                            SignUp(userId, password)
+                            SignUp(context, userId, password)
                             val intent = Intent(context, MyActivity::class.java)
                             context.startActivity(intent)
                         }
@@ -205,8 +205,13 @@ fun PasswordInputView(navController: NavController){
     }
 }
 
-fun SignUp(userId:String, password:String){
-
+fun SignUp(context: Context, userId:String, password:String){
+    val sharedPref = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+    with(sharedPref.edit()) {
+        putString("userId", userId)
+        putString("password", password)
+        apply()
+    }
 }
 
 @Preview(showBackground = true)
@@ -220,5 +225,5 @@ fun showIdInput(){
 @Composable
 fun showPwInput(){
     val navController = rememberNavController()
-    PasswordInputView(navController)
+    PasswordInputView(navController, "userId")
 }
