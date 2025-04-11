@@ -1,5 +1,6 @@
 package org.sopt.at.signup
 
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,6 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -31,10 +33,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import org.sopt.at.R
+import org.sopt.at.my.MyActivity
+import org.sopt.at.signin.SignInActivity
 
 
 @Composable
@@ -70,7 +75,7 @@ fun IdInputView(navController: NavController){
             Spacer(modifier = Modifier.padding(20.dp))
 
             TextField(
-                value = "",
+                value = userId,
                 onValueChange = { userId = it },
                 placeholder = {Text("아이디", color = colorResource(R.color.login_textField_text))},
                 modifier = Modifier.fillMaxWidth(),
@@ -117,6 +122,7 @@ fun IdInputView(navController: NavController){
 @Composable
 fun PasswordInputView(navController: NavController){
     var password by remember { mutableStateOf("") }
+    val context = LocalContext.current
 
     Surface (
         color = Color.Black,
@@ -147,7 +153,7 @@ fun PasswordInputView(navController: NavController){
             Spacer(modifier = Modifier.padding(20.dp))
 
             TextField(
-                value = "",
+                value = password,
                 onValueChange = { password = it },
                 placeholder = {Text("비밀번호", color = colorResource(R.color.login_textField_text))},
                 modifier = Modifier.fillMaxWidth(),
@@ -173,7 +179,8 @@ fun PasswordInputView(navController: NavController){
                         val userId = navController.currentBackStackEntry?.arguments?.getString("userId")
                         if (userId != null && password != null){
                             SignUp(userId, password)
-                            (navController.context as SignUpActivity).navigateToSignInActivity()
+                            val intent = Intent(context, MyActivity::class.java)
+                            context.startActivity(intent)
                         }
 //                        val context = navController.context
 //                        if(context is SignUpActivity){

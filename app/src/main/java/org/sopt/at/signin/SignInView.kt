@@ -97,7 +97,7 @@ fun LogInView() {
                     unfocusedIndicatorColor = Color.Transparent
                 )
                 TextField(
-                    value = "",
+                    value = userId,
                     onValueChange = {
                         userId = it
                     },
@@ -107,7 +107,7 @@ fun LogInView() {
                 )
                 Spacer(modifier = Modifier.padding(10.dp))
                 TextField(
-                    value = "",
+                    value = password,
                     onValueChange = {
                         password = it
                     },
