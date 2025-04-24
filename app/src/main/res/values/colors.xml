@@ -7,4 +7,15 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="login_textField_text">#FF7E7E7E</color>
+    <color name="login_textField_background">#FF262626</color>
+    <color name="login_button">#FF404040</color>
+    <color name="login_button_text">#FF7C7C7C</color>
+    <color name="login_menu_text">#FFA6A6A6</color>
+    <color name="login_divider">#FF4D4D4D</color>
+    <color name="login_text">#FF737373</color>
+    <color name="my_menu_background">#FF181818</color>
+    <color name="my_text">#FFB0B0B0</color>
+    <color name="my_arrow_gray">#FF6A6A6A</color>
+    <color name="my_sub_text">#FF24D2E7</color>
 </resources>
