@@ -2,6 +2,7 @@ package org.sopt.at.signup
 
 import android.content.Context
 import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -75,15 +77,22 @@ fun IdInputView(navController: NavController){
 
             Spacer(modifier = Modifier.padding(20.dp))
 
-            TextField(
+            val textFiledColors = TextFieldDefaults.colors(
+                unfocusedContainerColor = colorResource(R.color.login_textField_background),
+                unfocusedIndicatorColor = Color.Transparent,
+                focusedContainerColor = colorResource(R.color.login_textField_background),
+                focusedIndicatorColor = colorResource(R.color.login_menu_text),
+                focusedTextColor = colorResource(R.color.login_menu_text),
+                unfocusedTextColor = colorResource(R.color.login_menu_text)
+            )
+
+            OutlinedTextField(
                 value = userId,
                 onValueChange = { userId = it },
                 placeholder = {Text("아이디", color = colorResource(R.color.login_textField_text))},
                 modifier = Modifier.fillMaxWidth(),
-                colors = TextFieldDefaults.colors(
-                    unfocusedContainerColor = colorResource(R.color.login_textField_background),
-                    unfocusedIndicatorColor = Color.Transparent
-                )
+                colors = textFiledColors,
+                singleLine = true
             )
 
             Spacer(modifier = Modifier.padding(10.dp))
@@ -99,8 +108,8 @@ fun IdInputView(navController: NavController){
             ){
                 OutlinedButton(
                     onClick = {
-                        navController.currentBackStackEntry?.arguments?.putString("userId", userId)
-                        navController.navigate("pwInput")
+                        // userId를 인자로 pwInput 화면으로 전달
+                        navController.navigate("pwInput/$userId")
                     },
                     modifier = Modifier.fillMaxWidth().height(50.dp),
                     colors = ButtonDefaults.outlinedButtonColors(
@@ -116,6 +125,7 @@ fun IdInputView(navController: NavController){
                     )
                 }
             }
+            Spacer(modifier = Modifier.padding(20.dp))
         }
     }
 }
@@ -153,15 +163,22 @@ fun PasswordInputView(navController: NavController, userId: String){
 
             Spacer(modifier = Modifier.padding(20.dp))
 
-            TextField(
+            val textFiledColors = TextFieldDefaults.colors(
+                unfocusedContainerColor = colorResource(R.color.login_textField_background),
+                unfocusedIndicatorColor = Color.Transparent,
+                focusedContainerColor = colorResource(R.color.login_textField_background),
+                focusedIndicatorColor = colorResource(R.color.login_menu_text),
+                focusedTextColor = colorResource(R.color.login_menu_text),
+                unfocusedTextColor = colorResource(R.color.login_menu_text)
+            )
+
+            OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
                 placeholder = {Text("비밀번호", color = colorResource(R.color.login_textField_text))},
                 modifier = Modifier.fillMaxWidth(),
-                colors = TextFieldDefaults.colors(
-                    unfocusedContainerColor = colorResource(R.color.login_textField_background),
-                    unfocusedIndicatorColor = Color.Transparent
-                )
+                colors = textFiledColors,
+                singleLine = true
             )
 
             Spacer(modifier = Modifier.padding(10.dp))
@@ -179,13 +196,11 @@ fun PasswordInputView(navController: NavController, userId: String){
                     onClick = {
                         if (userId != null && password != null){
                             SignUp(context, userId, password)
-                            val intent = Intent(context, MyActivity::class.java)
+                            val intent = Intent(context, SignInActivity::class.java)
+                            intent.putExtra("userId", userId)
+                            intent.putExtra("password", password)
                             context.startActivity(intent)
                         }
-//                        val context = navController.context
-//                        if(context is SignUpActivity){
-//                            context.navigateToSignInActivity()
-//                        }
                     },
                     modifier = Modifier.fillMaxWidth().height(50.dp),
                     colors = ButtonDefaults.outlinedButtonColors(
@@ -201,6 +216,7 @@ fun PasswordInputView(navController: NavController, userId: String){
                     )
                 }
             }
+            Spacer(modifier = Modifier.padding(20.dp))
         }
     }
 }
@@ -212,6 +228,9 @@ fun SignUp(context: Context, userId:String, password:String){
         putString("password", password)
         apply()
     }
+
+    // 회원가입 성공 후 Toast 메시지 띄우기
+    Toast.makeText(context, "회원가입 성공!", Toast.LENGTH_SHORT).show()
 }
 
 @Preview(showBackground = true)

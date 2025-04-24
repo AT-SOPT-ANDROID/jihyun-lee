@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".signin.SingInActivity"
+            android:name=".signin.SignInActivity"
             android:exported="true"
             android:label="@string/title_activity_sing_in"
             android:theme="@style/Theme.ATSOPTANDROID">

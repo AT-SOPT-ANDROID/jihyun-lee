@@ -10,13 +10,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import org.sopt.at.signin.SignInActivity
 import org.sopt.at.ui.theme.ATSOPTANDROIDTheme
-import org.sopt.at.signup.IdInputView
-import org.sopt.at.signup.PasswordInputView
-import org.sopt.at.signup.SignUpActivity
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +21,7 @@ class MainActivity : ComponentActivity() {
             ATSOPTANDROIDTheme {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                     val context = LocalContext.current
-                    val intent = Intent(context, SignUpActivity::class.java).apply {
+                    val intent = Intent(context, SignInActivity::class.java).apply {
                         flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
                     }
                     context.startActivity(intent)

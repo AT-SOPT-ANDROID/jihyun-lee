@@ -20,7 +20,7 @@ class SignUpActivity : ComponentActivity() {
             NavHost(navController = navController, startDestination = "idInput"){
                 composable("idInput") {IdInputView(navController)}
                 composable(
-                    "pwInput?userId={userId}",
+                    "pwInput/{userId}",
                     arguments = listOf(navArgument("userId"){
                         defaultValue = ""
                     })

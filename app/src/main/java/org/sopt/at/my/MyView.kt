@@ -5,6 +5,7 @@ import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -88,6 +89,8 @@ fun MyView(userId: String = "프로필"){
                     contentDescription = "My Icon",
                     modifier = Modifier.size(80.dp)
                 )
+
+                Spacer(modifier = Modifier.padding(10.dp))
 
                 Text(
                     text = userId,
@@ -358,10 +361,11 @@ fun MyView(userId: String = "프로필"){
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     context.startActivity(intent)
                 },
-                colors = ButtonDefaults.buttonColors(
+                colors = ButtonDefaults.outlinedButtonColors(
                     containerColor = Color.Transparent
                 ),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
             ) {
                 Text(
                     text = "로그아웃",

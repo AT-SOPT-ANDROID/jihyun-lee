@@ -2,8 +2,10 @@ package org.sopt.at.signin
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,6 +19,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -46,6 +49,14 @@ import androidx.compose.ui.unit.sp
 import org.sopt.at.ui.theme.ATSOPTANDROIDTheme
 import org.sopt.at.R
 import org.sopt.at.my.MyActivity
+import org.sopt.at.signup.SignUpActivity
+
+fun getUserInfo(context: Context): Pair<String?, String?> {
+    val sharedPref = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+    val userId = sharedPref.getString("userId", null)  // null은 기본값
+    val password = sharedPref.getString("password", null)  // null은 기본값
+    return Pair(userId, password)  // Pair로 반환하여 사용할 수 있음
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -56,13 +67,10 @@ fun LogInView() {
     var passwordVisible by remember { mutableStateOf(false) }
     var loginError by remember { mutableStateOf(false) } // 로그인 실패 여부 상태 관리
 
-    var userId = ""
-    var password = ""
-
     val context = LocalContext.current
-    val sharedPref = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
-    val savedUserId = sharedPref.getString("userId", null)
-    val savedPassword = sharedPref.getString("password", null)
+
+    var userId by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
 
     Surface (
         color = Color.Black,
@@ -98,9 +106,13 @@ fun LogInView() {
                 val textFieldModifier = Modifier.fillMaxWidth()
                 val textFiledColors = TextFieldDefaults.colors(
                     unfocusedContainerColor = colorResource(R.color.login_textField_background),
-                    unfocusedIndicatorColor = Color.Transparent
+                    unfocusedIndicatorColor = Color.Transparent,
+                    focusedContainerColor = colorResource(R.color.login_textField_background),
+                    focusedIndicatorColor = colorResource(R.color.login_menu_text),
+                    focusedTextColor = colorResource(R.color.login_menu_text),
+                    unfocusedTextColor = colorResource(R.color.login_menu_text)
                 )
-                TextField(
+                OutlinedTextField(
                     value = userId,
                     onValueChange = {
                         userId = it
@@ -108,19 +120,18 @@ fun LogInView() {
                     placeholder = {Text("아이디", color = colorResource(R.color.login_textField_text))},
                     modifier = textFieldModifier,
                     colors = textFiledColors,
+                    singleLine = true
                 )
                 Spacer(modifier = Modifier.padding(10.dp))
-                TextField(
+                OutlinedTextField(
                     value = password,
                     onValueChange = {
                         password = it
                     },
                     placeholder = { Text("비밀번호", color = colorResource(R.color.login_textField_text)) },
                     modifier = Modifier.fillMaxWidth(),
-                    colors = TextFieldDefaults.colors(
-                        unfocusedContainerColor = colorResource(R.color.login_textField_background),
-                        unfocusedIndicatorColor = Color.Transparent
-                    ),
+                    colors = textFiledColors,
+                    singleLine = true,
                     trailingIcon = {
                         IconButton(onClick = { passwordVisible = !passwordVisible }) {
                             Icon(
@@ -138,18 +149,28 @@ fun LogInView() {
                 Button(
                     onClick = {
                         // 로그인 처리
-                        if (userId == savedUserId && password == savedPassword) {
-                            // 로그인 성공 시 Toast 메시지
-                            Toast.makeText(context, "로그인 성공!", Toast.LENGTH_SHORT).show()
+                        val (savedUserId, savedPassword) = getUserInfo(context)
+                        if (userId != null && password != null) {
+                            Log.d("LoginDebug", "Entered userId: $userId, password: $password")
+                            Log.d("LoginDebug", "Saved userId: $savedUserId, savedPassword: $savedPassword")
 
-                            // MyActivity로 이동
-                            val intent = Intent(context, MyActivity::class.java)
-                            intent.putExtra("userId", userId)
-                            context.startActivity(intent)
+                            if (userId == savedUserId && password == savedPassword) {
+                                // 로그인 성공 시 Toast 메시지
+                                Toast.makeText(context, "로그인 성공!", Toast.LENGTH_SHORT).show()
+
+                                // MyActivity로 이동
+                                val intent = Intent(context, MyActivity::class.java)
+                                intent.putExtra("userId", userId)
+                                context.startActivity(intent)
+                            } else {
+                                // 로그인 실패 시 Toast 메시지
+                                Toast.makeText(context, "아이디 또는 비밀번호가 잘못되었습니다.", Toast.LENGTH_SHORT).show()
+                            }
                         } else {
-                            // 로그인 실패 시 Toast 메시지
-                            Toast.makeText(context, "아이디 또는 비밀번호가 잘못되었습니다.", Toast.LENGTH_SHORT).show()
+                            // 값이 null이면 처리할 내용
+                            println("No user information found.")
                         }
+
                     },
                     modifier = Modifier.fillMaxWidth().height(50.dp),
                     colors = ButtonDefaults.buttonColors(
@@ -160,7 +181,7 @@ fun LogInView() {
                     Text(
                         text = "로그인하기",
                         color = colorResource(R.color.login_button_text),
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
                     )
                 }
 
@@ -198,7 +219,11 @@ fun LogInView() {
                     Text(
                         text="회원가입",
                         color = colorResource(textColor),
-                        fontSize = textSize
+                        fontSize = textSize,
+                        modifier = Modifier.clickable {
+                            val intent = Intent(context, SignUpActivity::class.java)
+                            context.startActivity(intent)
+                        }
                     )
                 }
                 Spacer(modifier = Modifier.padding(20.dp))
