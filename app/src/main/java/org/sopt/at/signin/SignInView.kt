@@ -23,7 +23,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
@@ -46,9 +45,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.sopt.at.ui.theme.ATSOPTANDROIDTheme
 import org.sopt.at.R
-import org.sopt.at.my.MyActivity
+import org.sopt.at.home.MyActivity
 import org.sopt.at.signup.SignUpActivity
 
 fun getUserInfo(context: Context): Pair<String?, String?> {
