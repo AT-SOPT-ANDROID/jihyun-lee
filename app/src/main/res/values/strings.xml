@@ -7,4 +7,11 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_my">MyActivity</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="bottom_nav_home">Home</string>
+    <string name="bottom_nav_shorts">Shorts</string>
+    <string name="bottom_nav_live">LIVE</string>
+    <string name="bottom_nav_search">SEARCH</string>
+    <string name="bottom_nav_history">HISTORY</string>
+    <string name="today_tiving_top20">오늘의 티빙 TOP 20</string>
+    <string name="contents_on_air">지금 방영 중인 콘텐츠</string>
 </resources>
