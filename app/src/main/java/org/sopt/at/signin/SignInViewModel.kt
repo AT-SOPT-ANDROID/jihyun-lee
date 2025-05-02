@@ -33,6 +33,11 @@ class SignInViewModel: ViewModel() {
         viewModelScope.launch {
             val (savedId, savedPw) = getUserInfo(context)
             if (_userId.value == savedId && _password.value == savedPw) {
+                val sharedPref = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+                with(sharedPref.edit()){
+                    putString("userId", _userId.value)
+                    apply()
+                }
                 _loginSuccess.value = true
                 Toast.makeText(context, "로그인 성공!", Toast.LENGTH_SHORT).show()
             } else {

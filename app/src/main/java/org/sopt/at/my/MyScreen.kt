@@ -22,6 +22,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,25 +32,34 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import org.sopt.at.R
 import org.sopt.at.utils.BottomNavigation
 
 @Composable
-fun MyScreen(navController: NavController, userId: String?){
+fun MyScreen(
+    navController: NavController,
+    viewModel:MyViewModel = viewModel()
+){
     val scrollState = rememberScrollState()
-    var userId = userId?:"프로필"
 
     val context = LocalContext.current
-    val sharedPref = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+    val userId by viewModel.userId.collectAsState()
+    val isLoggedOut by viewModel.isLoggedOut.collectAsState()
 
-    LaunchedEffect(userId) {
-        with(sharedPref.edit()){
-            putString("userId", userId)
-            apply()
-        }
+    LaunchedEffect (Unit) {
+        viewModel.loadUserId(context)
     }
 
+    LaunchedEffect (isLoggedOut) {
+        if(isLoggedOut){
+            Toast.makeText(context, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
+            navController.navigate("SignInScreen")
+            viewModel.clearLogoutState()
+        }
+    }
 
     Surface (
         color = Color.Black,
