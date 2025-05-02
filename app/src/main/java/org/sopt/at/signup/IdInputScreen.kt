@@ -16,6 +16,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,13 +31,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import org.sopt.at.R
 
 
 @Composable
-fun IdInputScreen(navController: NavController){
-    var userId by remember { mutableStateOf("") }
+fun IdInputScreen(
+    navController: NavController,
+    viewModel:SignUpViewModel
+){
+    val userId by viewModel.userId.collectAsState()
 
     Surface (
         color = Color.Black,
@@ -77,7 +82,7 @@ fun IdInputScreen(navController: NavController){
 
             OutlinedTextField(
                 value = userId,
-                onValueChange = { userId = it },
+                onValueChange = { viewModel.onUserIdChange(it)},
                 placeholder = { Text("아이디", color = colorResource(R.color.login_textField_text)) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = textFiledColors,
@@ -98,7 +103,7 @@ fun IdInputScreen(navController: NavController){
                 OutlinedButton(
                     onClick = {
                         // userId를 인자로 pwInput 화면으로 전달
-                        navController.navigate("pwInput/$userId")
+                        navController.navigate("PasswordInputScreen")
                     },
                     modifier = Modifier.fillMaxWidth().height(50.dp),
                     colors = ButtonDefaults.outlinedButtonColors(

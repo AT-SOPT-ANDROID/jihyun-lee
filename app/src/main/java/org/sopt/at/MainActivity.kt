@@ -7,7 +7,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -20,6 +22,7 @@ import org.sopt.at.search.SearchScreen
 import org.sopt.at.shorts.ShortsScreen
 import org.sopt.at.signup.IdInputScreen
 import org.sopt.at.signup.PasswordInputScreen
+import org.sopt.at.signup.SignUpViewModel
 import org.sopt.at.ui.theme.ATSOPTANDROIDTheme
 
 class MainActivity : ComponentActivity() {
@@ -42,10 +45,19 @@ class MainActivity : ComponentActivity() {
                         composable("LiveScreen") { LiveScreen(navController) }
                         composable("SearchScreen") { SearchScreen(navController) }
                         composable("HistoryScreen") { HistoryScreen(navController) }
-                        composable("IdInputScreen") {IdInputScreen(navController)}
+                        composable("IdInputScreen") { backStackEntry ->
+                            val parentEntry = remember (backStackEntry){
+                                navController.getBackStackEntry("IdInputScreen")
+                            }
+                            val viewModel:SignUpViewModel = viewModel(parentEntry)
+                            IdInputScreen(navController,viewModel)
+                        }
                         composable("PasswordInputScreen"){ backStackEntry ->
-                            val userId = backStackEntry.arguments?.getString("userId")
-                            PasswordInputScreen(navController, userId.orEmpty())
+                            val parentEntry = remember(backStackEntry){
+                                navController.getBackStackEntry("IdInputScreen")
+                            }
+                            val viewModel:SignUpViewModel = viewModel(parentEntry)
+                            PasswordInputScreen(navController, viewModel)
                         }
                     }
                 }

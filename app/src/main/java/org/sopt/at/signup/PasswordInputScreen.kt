@@ -16,6 +16,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,13 +33,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import org.sopt.at.R
 
 
 @Composable
-fun PasswordInputScreen(navController: NavController, userId: String){
-    var password by remember { mutableStateOf("") }
+fun PasswordInputScreen(
+    navController: NavController,
+    viewModel: SignUpViewModel
+){
+    val password by viewModel.password.collectAsState()
     val context = LocalContext.current
 
     Surface (
@@ -79,7 +85,7 @@ fun PasswordInputScreen(navController: NavController, userId: String){
 
             OutlinedTextField(
                 value = password,
-                onValueChange = { password = it },
+                onValueChange = { viewModel.onPasswordChange(it) },
                 placeholder = { Text("비밀번호", color = colorResource(R.color.login_textField_text)) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = textFiledColors,
@@ -99,8 +105,7 @@ fun PasswordInputScreen(navController: NavController, userId: String){
             ){
                 OutlinedButton(
                     onClick = {
-                        if (userId != null && password != null){
-                            SignUp(context, userId, password)
+                        viewModel.signUp(context){
                             navController.navigate("SignInScreen")
                         }
                     },
