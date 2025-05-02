@@ -45,9 +45,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import org.sopt.at.R
-import org.sopt.at.home.MyActivity
-import org.sopt.at.signup.SignUpActivity
 
 fun getUserInfo(context: Context): Pair<String?, String?> {
     val sharedPref = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
@@ -58,7 +57,7 @@ fun getUserInfo(context: Context): Pair<String?, String?> {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LogInView() {
+fun SignInScreen(navController: NavController) {
     // SnackbarHostState를 LogInView 내에서 remember로 관리
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -156,10 +155,7 @@ fun LogInView() {
                                 // 로그인 성공 시 Toast 메시지
                                 Toast.makeText(context, "로그인 성공!", Toast.LENGTH_SHORT).show()
 
-                                // MyActivity로 이동
-                                val intent = Intent(context, MyActivity::class.java)
-                                intent.putExtra("userId", userId)
-                                context.startActivity(intent)
+                                navController.navigate("MyScreen/${userId}")
                             } else {
                                 // 로그인 실패 시 Toast 메시지
                                 Toast.makeText(context, "아이디 또는 비밀번호가 잘못되었습니다.", Toast.LENGTH_SHORT).show()
@@ -219,8 +215,7 @@ fun LogInView() {
                         color = colorResource(textColor),
                         fontSize = textSize,
                         modifier = Modifier.clickable {
-                            val intent = Intent(context, SignUpActivity::class.java)
-                            context.startActivity(intent)
+                            navController.navigate("IdInputScreen")
                         }
                     )
                 }
@@ -242,10 +237,4 @@ fun LogInView() {
             loginError = false // Snackbar 표시 후 상태 초기화
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun showLogInView(){
-    LogInView()
 }

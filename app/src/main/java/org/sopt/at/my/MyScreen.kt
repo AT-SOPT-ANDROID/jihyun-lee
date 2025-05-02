@@ -1,17 +1,14 @@
-package org.sopt.at.home
+package org.sopt.at.my
 
 import android.content.Context
-import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -35,10 +32,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import org.sopt.at.R
-import org.sopt.at.signin.SignInActivity
+import org.sopt.at.utils.BottomNavigation
 
 @Composable
-fun MyView(navController: NavController, userId: String?){
+fun MyScreen(navController: NavController, userId: String?){
     val scrollState = rememberScrollState()
     var userId = userId?:"프로필"
 
@@ -373,9 +370,7 @@ fun MyView(navController: NavController, userId: String?){
                         Toast.makeText(context, "로그아웃 되었습니다", Toast.LENGTH_SHORT).show()
 
                         // 로그인 화면으로 이동
-                        val intent = Intent(context, SignInActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        context.startActivity(intent)
+                        navController.navigate("SignInScreen")
                     },
                     colors = ButtonDefaults.outlinedButtonColors(
                         containerColor = Color.Transparent

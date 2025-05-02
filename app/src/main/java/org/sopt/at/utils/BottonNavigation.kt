@@ -1,4 +1,4 @@
-package org.sopt.at.home
+package org.sopt.at.utils
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

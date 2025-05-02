@@ -1,6 +1,5 @@
 package org.sopt.at
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,8 +8,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import org.sopt.at.signin.SignInActivity
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import org.sopt.at.history.HistoryScreen
+import org.sopt.at.home.HomeScreen
+import org.sopt.at.live.LiveScreen
+import org.sopt.at.my.MyScreen
+import org.sopt.at.search.SearchScreen
+import org.sopt.at.shorts.ShortsScreen
+import org.sopt.at.signup.IdInputScreen
+import org.sopt.at.signup.PasswordInputScreen
 import org.sopt.at.ui.theme.ATSOPTANDROIDTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,11 +29,25 @@ class MainActivity : ComponentActivity() {
         setContent {
             ATSOPTANDROIDTheme {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    val context = LocalContext.current
-                    val intent = Intent(context, SignInActivity::class.java).apply {
-                        flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    val navController = rememberNavController()
+                    val userId = intent.getStringExtra("userId")?:"프로필"
+
+                    NavHost(navController=navController, startDestination="myView"){
+                        composable("MyScreen/{userId}") { backStackEntry ->
+                            val userId = backStackEntry.arguments?.getString("userId")
+                            MyScreen(navController, userId)
+                        }
+                        composable("HomeScreen") { HomeScreen(navController) }
+                        composable("ShortsScreen") { ShortsScreen(navController) }
+                        composable("LiveScreen") { LiveScreen(navController) }
+                        composable("SearchScreen") { SearchScreen(navController) }
+                        composable("HistoryScreen") { HistoryScreen(navController) }
+                        composable("IdInputScreen") {IdInputScreen(navController)}
+                        composable("PasswordInputScreen"){ backStackEntry ->
+                            val userId = backStackEntry.arguments?.getString("userId")
+                            PasswordInputScreen(navController, userId.orEmpty())
+                        }
                     }
-                    context.startActivity(intent)
                 }
             }
         }
