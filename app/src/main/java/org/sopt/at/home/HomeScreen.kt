@@ -24,6 +24,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,19 +42,19 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import org.sopt.at.R
+import org.sopt.at.utils.BottomNavigation
 
 @Composable
-fun HomeView(
+fun HomeScreen(
     navController: NavController,
-    homeViewModel: HomeViewModel = viewModel(),
-    dramaViewModel: DramaViewModel = viewModel()
+    homeViewModel: HomeViewModel = viewModel()
 ){
     BottomNavigation(navController)
 
     val tabItems = homeViewModel.tabItems
-    val selectedTabIndex = homeViewModel.selectedTabIndex.value
+    val selectedTabIndex by homeViewModel.selectedTabIndex.collectAsState()
 
-    val dramaItems = dramaViewModel.dramaItems
+    val dramaItems = homeViewModel.dramaItems
 
     val scrollState = rememberScrollState()
 
@@ -91,7 +93,7 @@ fun HomeView(
                         painter = painterResource(R.drawable.my_tiving_icon),
                         contentDescription = "My Profile",
                         modifier = Modifier.size(25.dp)
-                            .clickable { navController.navigate("MyView") }
+                            .clickable { navController.navigate("MyScreen") }
                     )
                 }
             }
@@ -218,5 +220,5 @@ fun TabItem(title:String, isSelected:Boolean, onclick:()->Unit){
 @Composable
 fun ShowHomeView(){
     val navController = rememberNavController()
-    HomeView(navController)
+    HomeScreen(navController)
 }

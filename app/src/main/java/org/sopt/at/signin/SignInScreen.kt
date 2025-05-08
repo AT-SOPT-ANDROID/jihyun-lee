@@ -27,6 +27,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,9 +46,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import org.sopt.at.R
-import org.sopt.at.home.MyActivity
-import org.sopt.at.signup.SignUpActivity
 
 fun getUserInfo(context: Context): Pair<String?, String?> {
     val sharedPref = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
@@ -58,17 +59,20 @@ fun getUserInfo(context: Context): Pair<String?, String?> {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LogInView() {
-    // SnackbarHostState를 LogInView 내에서 remember로 관리
+fun SignInScreen(
+    navController: NavController,
+    viewModel: SignInViewModel = viewModel()
+) {
     val snackbarHostState = remember { SnackbarHostState() }
 
     var passwordVisible by remember { mutableStateOf(false) }
-    var loginError by remember { mutableStateOf(false) } // 로그인 실패 여부 상태 관리
 
     val context = LocalContext.current
 
-    var userId by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    val userId by viewModel.userId.collectAsState()
+    val password by viewModel.password.collectAsState()
+    val loginSuccess by viewModel.loginSuccess.collectAsState()
+    val loginError by viewModel.loginError.collectAsState()
 
     Surface (
         color = Color.Black,
@@ -113,7 +117,7 @@ fun LogInView() {
                 OutlinedTextField(
                     value = userId,
                     onValueChange = {
-                        userId = it
+                        viewModel.onUserIdChange(it)
                     },
                     placeholder = {Text("아이디", color = colorResource(R.color.login_textField_text))},
                     modifier = textFieldModifier,
@@ -124,7 +128,7 @@ fun LogInView() {
                 OutlinedTextField(
                     value = password,
                     onValueChange = {
-                        password = it
+                        viewModel.onPasswordChange(it)
                     },
                     placeholder = { Text("비밀번호", color = colorResource(R.color.login_textField_text)) },
                     modifier = Modifier.fillMaxWidth(),
@@ -146,29 +150,7 @@ fun LogInView() {
 
                 Button(
                     onClick = {
-                        // 로그인 처리
-                        val (savedUserId, savedPassword) = getUserInfo(context)
-                        if (userId != null && password != null) {
-                            Log.d("LoginDebug", "Entered userId: $userId, password: $password")
-                            Log.d("LoginDebug", "Saved userId: $savedUserId, savedPassword: $savedPassword")
-
-                            if (userId == savedUserId && password == savedPassword) {
-                                // 로그인 성공 시 Toast 메시지
-                                Toast.makeText(context, "로그인 성공!", Toast.LENGTH_SHORT).show()
-
-                                // MyActivity로 이동
-                                val intent = Intent(context, MyActivity::class.java)
-                                intent.putExtra("userId", userId)
-                                context.startActivity(intent)
-                            } else {
-                                // 로그인 실패 시 Toast 메시지
-                                Toast.makeText(context, "아이디 또는 비밀번호가 잘못되었습니다.", Toast.LENGTH_SHORT).show()
-                            }
-                        } else {
-                            // 값이 null이면 처리할 내용
-                            println("No user information found.")
-                        }
-
+                        viewModel.login(context)
                     },
                     modifier = Modifier.fillMaxWidth().height(50.dp),
                     colors = ButtonDefaults.buttonColors(
@@ -219,8 +201,7 @@ fun LogInView() {
                         color = colorResource(textColor),
                         fontSize = textSize,
                         modifier = Modifier.clickable {
-                            val intent = Intent(context, SignUpActivity::class.java)
-                            context.startActivity(intent)
+                            navController.navigate("IdInputScreen")
                         }
                     )
                 }
@@ -235,17 +216,18 @@ fun LogInView() {
             }
         }
     }
-    // 로그인 실패 시 Snackbar 표시
-    LaunchedEffect(key1 = loginError) {
-        if (loginError) {
-            snackbarHostState.showSnackbar("로그인 실패! 아이디와 비밀번호를 확인해주세요.")
-            loginError = false // Snackbar 표시 후 상태 초기화
+    LaunchedEffect(loginSuccess) {
+        if(loginSuccess){
+            snackbarHostState.showSnackbar("로그인 성공")
+            navController.navigate("MyScreen/${userId}")
+            viewModel.clearLoginResult()
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun showLogInView(){
-    LogInView()
+    // 로그인 실패 시 Snackbar 표시
+    LaunchedEffect(loginError) {
+        if (loginError) {
+            snackbarHostState.showSnackbar("로그인 실패! 아이디와 비밀번호를 확인해주세요.")
+            viewModel.clearLoginResult()
+        }
+    }
 }
