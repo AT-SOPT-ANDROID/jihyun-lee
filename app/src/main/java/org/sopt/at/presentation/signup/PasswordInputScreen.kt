@@ -1,4 +1,4 @@
-package org.sopt.at.signup
+package org.sopt.at.presentation.signup
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box

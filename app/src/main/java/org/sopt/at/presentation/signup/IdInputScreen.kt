@@ -1,4 +1,4 @@
-package org.sopt.at.signup
+package org.sopt.at.presentation.signup
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -39,7 +39,7 @@ import org.sopt.at.R
 @Composable
 fun IdInputScreen(
     navController: NavController,
-    viewModel:SignUpViewModel
+    viewModel: SignUpViewModel
 ){
     val userId by viewModel.userId.collectAsState()
 

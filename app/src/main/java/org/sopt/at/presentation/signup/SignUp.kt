@@ -1,4 +1,4 @@
-package org.sopt.at.signup
+package org.sopt.at.presentation.signup
 
 import android.content.Context
 import android.widget.Toast

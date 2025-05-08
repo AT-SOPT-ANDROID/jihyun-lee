@@ -1,4 +1,4 @@
-package org.sopt.at.history
+package org.sopt.at.presentation.shorts
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -11,14 +11,14 @@ import androidx.navigation.NavController
 import org.sopt.at.utils.BottomNavigation
 
 @Composable
-fun HistoryScreen(navController: NavController){
+fun ShortsScreen(navController: NavController){
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(color = Color.Black)
     ){
         Text(
-            text = "History Screen"
+            text = "Shorts Screen"
         )
         BottomNavigation(navController = navController)
     }

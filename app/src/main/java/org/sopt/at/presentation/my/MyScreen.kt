@@ -1,4 +1,4 @@
-package org.sopt.at.my
+package org.sopt.at.presentation.my
 
 import android.content.Context
 import android.widget.Toast
@@ -41,7 +41,7 @@ import org.sopt.at.utils.BottomNavigation
 @Composable
 fun MyScreen(
     navController: NavController,
-    viewModel:MyViewModel = viewModel()
+    viewModel: MyViewModel = viewModel()
 ){
     val scrollState = rememberScrollState()
 

@@ -1,4 +1,4 @@
-package org.sopt.at.signin
+package org.sopt.at.presentation.signin
 
 import android.content.Context
 import android.content.Intent

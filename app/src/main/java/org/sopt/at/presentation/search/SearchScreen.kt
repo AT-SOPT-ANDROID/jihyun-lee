@@ -1,4 +1,4 @@
-package org.sopt.at.search
+package org.sopt.at.presentation.search
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

@@ -1,4 +1,4 @@
-package org.sopt.at.shorts
+package org.sopt.at.presentation.live
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -11,14 +11,14 @@ import androidx.navigation.NavController
 import org.sopt.at.utils.BottomNavigation
 
 @Composable
-fun ShortsScreen(navController: NavController){
+fun LiveScreen(navController: NavController){
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(color = Color.Black)
     ){
         Text(
-            text = "Shorts Screen"
+            text = "Live Screen"
         )
         BottomNavigation(navController = navController)
     }

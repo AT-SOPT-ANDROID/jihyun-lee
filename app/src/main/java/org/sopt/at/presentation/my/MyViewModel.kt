@@ -1,4 +1,4 @@
-package org.sopt.at.my
+package org.sopt.at.presentation.my
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
