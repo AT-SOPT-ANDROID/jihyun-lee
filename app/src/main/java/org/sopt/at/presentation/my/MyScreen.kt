@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -46,7 +47,10 @@ fun MyScreen(
     val scrollState = rememberScrollState()
 
     val context = LocalContext.current
-    val userId by viewModel.userId.collectAsState()
+    val userId = remember {
+        context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+            .getString("userId", "프로필") ?: "프로필"
+    }
     val isLoggedOut by viewModel.isLoggedOut.collectAsState()
 
     LaunchedEffect (Unit) {

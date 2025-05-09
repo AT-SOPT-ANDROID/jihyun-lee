@@ -42,6 +42,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import org.sopt.at.R
@@ -58,7 +59,7 @@ fun getUserInfo(context: Context): Pair<String?, String?> {
 @Composable
 fun SignInScreen(
     navController: NavController,
-    viewModel: SignInViewModel = viewModel()
+    viewModel: SignInViewModel = hiltViewModel()
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -66,10 +67,19 @@ fun SignInScreen(
 
     val context = LocalContext.current
 
-    val userId by viewModel.userId.collectAsState()
+    val userId by viewModel.loginId.collectAsState()
     val password by viewModel.password.collectAsState()
     val loginSuccess by viewModel.loginSuccess.collectAsState()
     val loginError by viewModel.loginError.collectAsState()
+
+    LaunchedEffect(loginSuccess) {
+        if (loginSuccess) {
+            navController.navigate("MyScreen") {
+                popUpTo("SignInScreen") { inclusive = true }
+            }
+        }
+    }
+
 
     Surface (
         color = Color.Black,

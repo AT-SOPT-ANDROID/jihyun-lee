@@ -4,8 +4,10 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import org.sopt.at.data.repository.SignInRepositoryImpl
 import org.sopt.at.domain.repository.SignUpRepository
 import org.sopt.at.data.repository.SignUpRepositoryImpl
+import org.sopt.at.domain.repository.SignInRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -15,4 +17,9 @@ abstract class RepositoryModule {
     abstract fun bindSignUpRepository(
         impl: SignUpRepositoryImpl
     ): SignUpRepository
+
+    @Binds
+    abstract fun bindSignInRepository(
+        impl: SignInRepositoryImpl
+    ): SignInRepository
 }

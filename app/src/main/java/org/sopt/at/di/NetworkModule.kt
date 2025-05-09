@@ -11,6 +11,7 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.sopt.at.BuildConfig
+import org.sopt.at.data.api.SignInService
 import org.sopt.at.data.api.SignUpService
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
@@ -77,4 +78,11 @@ object NetworkModule {
         retrofit: Retrofit
     ): SignUpService =
         retrofit.create(SignUpService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideSignInService(
+        retrofit: Retrofit
+    ): SignInService = retrofit.create(SignInService::class.java)
+
 }

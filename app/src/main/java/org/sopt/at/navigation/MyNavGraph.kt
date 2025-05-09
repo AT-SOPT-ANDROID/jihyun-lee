@@ -6,8 +6,5 @@ import androidx.navigation.compose.composable
 import org.sopt.at.presentation.my.MyScreen
 
 fun NavGraphBuilder.myNavGraph(navController: NavHostController) {
-    composable("MyScreen/{userId}") { backStackEntry ->
-        val userId = backStackEntry.arguments?.getString("userId") ?: "프로필"
-        MyScreen(navController)
-    }
+    composable("MyScreen") { MyScreen(navController) }
 }
