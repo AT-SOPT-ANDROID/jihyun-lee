@@ -24,7 +24,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,7 +32,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import org.sopt.at.R
 import org.sopt.at.utils.BottomNavigation
@@ -42,19 +41,19 @@ import org.sopt.at.viewmodel.MyViewModel
 @Composable
 fun MyScreen(
     navController: NavController,
-    viewModel: MyViewModel = viewModel()
+    viewModel: MyViewModel = hiltViewModel()
 ){
     val scrollState = rememberScrollState()
 
     val context = LocalContext.current
-    val userId = remember {
-        context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
-            .getString("userId", "프로필") ?: "프로필"
-    }
+    val sharedPreferences = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+    val userId = sharedPreferences.getLong("userId", 0L)
+
+    val nickname by viewModel.nickname.collectAsState()
     val isLoggedOut by viewModel.isLoggedOut.collectAsState()
 
-    LaunchedEffect (Unit) {
-        viewModel.loadUserId(context)
+    LaunchedEffect (userId) {
+        viewModel.fetchUserNickname(userId)
     }
 
     LaunchedEffect (isLoggedOut) {
@@ -121,7 +120,7 @@ fun MyScreen(
                     Spacer(modifier = Modifier.padding(10.dp))
 
                     Text(
-                        text = userId,
+                        text = nickname,
                         color = Color.White
                     )
 

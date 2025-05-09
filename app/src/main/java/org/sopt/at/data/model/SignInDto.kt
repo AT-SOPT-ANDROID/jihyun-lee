@@ -10,7 +10,7 @@ data class RequestSignInDto(
 
 @Serializable
 data class ResponseSignInDataDto(
-    val userId: String,
+    val userId: Long,
 )
 
 @Serializable

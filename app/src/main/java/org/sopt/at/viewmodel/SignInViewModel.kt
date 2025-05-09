@@ -13,6 +13,7 @@ import org.sopt.at.domain.repository.SignInRepository
 import org.sopt.at.domain.repository.SignUpRepository
 import org.sopt.at.presentation.signin.getUserInfo
 import javax.inject.Inject
+import androidx.core.content.edit
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
@@ -53,7 +54,7 @@ class SignInViewModel @Inject constructor(
                         // 성공: 로그인 성공 처리
                         val sharedPref = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
                         with(sharedPref.edit()) {
-                            putString("userId", _loginId.value)
+                            putLong("userId", body.data.userId)
                             apply()
                         }
                         _loginSuccess.value = true

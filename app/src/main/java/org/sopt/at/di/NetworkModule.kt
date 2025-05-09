@@ -13,6 +13,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.sopt.at.BuildConfig
 import org.sopt.at.data.api.SignInService
 import org.sopt.at.data.api.SignUpService
+import org.sopt.at.data.api.UserService
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -84,5 +85,11 @@ object NetworkModule {
     fun provideSignInService(
         retrofit: Retrofit
     ): SignInService = retrofit.create(SignInService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideUserService(
+        retrofit: Retrofit
+    ): UserService = retrofit.create(UserService::class.java)
 
 }
