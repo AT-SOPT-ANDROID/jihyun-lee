@@ -12,11 +12,12 @@ fun RootNavGraph(navController: NavHostController){
     NavHost(navController = navController, startDestination = "start") {
         composable("start"){
             LaunchedEffect(Unit) {
-                navController.navigate("MyScreen/프로필") {
+                navController.navigate("SignInScreen") {
                     popUpTo("start") { inclusive = true }
                 }
             }
         }
+        signinNavGraph(navController)
         homeNavGraph(navController)
         signupNavGraph(navController)
         myNavGraph(navController)

@@ -43,6 +43,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import org.sopt.at.R
 import org.sopt.at.utils.BottomNavigation
+import org.sopt.at.viewmodel.HomeViewModel
 
 @Composable
 fun HomeScreen(

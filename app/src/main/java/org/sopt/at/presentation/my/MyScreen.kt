@@ -32,11 +32,11 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import org.sopt.at.R
 import org.sopt.at.utils.BottomNavigation
+import org.sopt.at.viewmodel.MyViewModel
 
 @Composable
 fun MyScreen(

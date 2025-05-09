@@ -21,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -32,13 +33,13 @@ import androidx.navigation.NavController
 import org.sopt.at.R
 import org.sopt.at.viewmodel.SignUpViewModel
 
-
 @Composable
-fun IdInputScreen(
+fun NicknameInputScreen(
     navController: NavController,
     viewModel: SignUpViewModel
 ){
-    val userId by viewModel.userId.collectAsState()
+    val nickname by viewModel.nickname.collectAsState()
+    val context = LocalContext.current
 
     Surface (
         color = Color.Black,
@@ -58,7 +59,7 @@ fun IdInputScreen(
             )
 
             Text(
-                text = stringResource(R.string.signup_id),
+                text = stringResource(R.string.signup_nickname),
                 modifier = Modifier.fillMaxWidth(),
                 color = Color.White,
                 fontSize = 25.sp,
@@ -78,9 +79,9 @@ fun IdInputScreen(
             )
 
             OutlinedTextField(
-                value = userId,
-                onValueChange = { viewModel.onUserIdChange(it)},
-                placeholder = { Text("아이디", color = colorResource(R.color.login_textField_text)) },
+                value = nickname,
+                onValueChange = { viewModel.onNicknameChange(it) },
+                placeholder = { Text("닉네임", color = colorResource(R.color.login_textField_text)) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = textFiledColors,
                 singleLine = true
@@ -88,10 +89,10 @@ fun IdInputScreen(
 
             Spacer(modifier = Modifier.padding(10.dp))
 
-            Text(
-                text = "영문 소문자 또는 영문 소문자, 숫자 조합 6~12 자리",
-                color = colorResource(R.color.login_text)
-            )
+//            Text(
+//                text = "영문 소문자 또는 영문 소문자, 숫자 조합 6~12 자리",
+//                color = colorResource(R.color.login_text)
+//            )
 
             Box(
                 modifier = Modifier.fillMaxSize(),
@@ -99,8 +100,9 @@ fun IdInputScreen(
             ){
                 OutlinedButton(
                     onClick = {
-                        // userId를 인자로 pwInput 화면으로 전달
-                        navController.navigate("PasswordInputScreen")
+                        viewModel.signUp(context){
+                            navController.navigate("SignInScreen")
+                        }
                     },
                     modifier = Modifier.fillMaxWidth().height(50.dp),
                     colors = ButtonDefaults.outlinedButtonColors(

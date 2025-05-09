@@ -1,4 +1,4 @@
-package org.sopt.at.presentation.signin
+package org.sopt.at.viewmodel
 
 import android.content.Context
 import android.widget.Toast
@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import org.sopt.at.presentation.signin.getUserInfo
 
 class SignInViewModel: ViewModel() {
     private val _userId = MutableStateFlow("")

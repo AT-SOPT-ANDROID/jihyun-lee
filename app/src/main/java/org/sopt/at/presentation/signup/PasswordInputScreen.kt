@@ -16,12 +16,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,9 +29,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import org.sopt.at.R
+import org.sopt.at.viewmodel.SignUpViewModel
 
 
 @Composable
@@ -44,7 +40,6 @@ fun PasswordInputScreen(
     viewModel: SignUpViewModel
 ){
     val password by viewModel.password.collectAsState()
-    val context = LocalContext.current
 
     Surface (
         color = Color.Black,
@@ -64,7 +59,7 @@ fun PasswordInputScreen(
             )
 
             Text(
-                text = stringResource(R.string.signup_passowrd),
+                text = stringResource(R.string.signup_password),
                 modifier = Modifier.fillMaxWidth(),
                 color = Color.White,
                 fontSize = 25.sp,
@@ -105,14 +100,11 @@ fun PasswordInputScreen(
             ){
                 OutlinedButton(
                     onClick = {
-                        viewModel.signUp(context){
-                            navController.navigate("SignInScreen")
-                        }
+                        navController.navigate("NicknameInputScreen")
                     },
                     modifier = Modifier.fillMaxWidth().height(50.dp),
                     colors = ButtonDefaults.outlinedButtonColors(
                         containerColor = Color.Transparent,
-
                         ),
                     shape = TextFieldDefaults.shape
                 ) {

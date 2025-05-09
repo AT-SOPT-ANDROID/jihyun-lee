@@ -1,9 +1,6 @@
 package org.sopt.at.presentation.signin
 
 import android.content.Context
-import android.content.Intent
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -43,12 +40,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import org.sopt.at.R
+import org.sopt.at.viewmodel.SignInViewModel
 
 fun getUserInfo(context: Context): Pair<String?, String?> {
     val sharedPref = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
