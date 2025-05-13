@@ -3,7 +3,8 @@
     <string name="title_activity_sing_in">SingInActivity</string>
     <string name="login_title">TIVING ID 로그인</string>
     <string name="signup_id">아이디를 입력해주세요.</string>
-    <string name="signup_passowrd">비밀번호를 입력해주세요.</string>
+    <string name="signup_password">비밀번호를 입력해주세요.</string>
+    <string name="signup_nickname">닉네임을 입력해주세요.</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_my">MyActivity</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
