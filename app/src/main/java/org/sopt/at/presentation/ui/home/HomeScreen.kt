@@ -1,4 +1,4 @@
-package org.sopt.at.presentation.ui
+package org.sopt.at.presentation.ui.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -42,7 +42,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import org.sopt.at.R
-import org.sopt.at.utils.BottomNavigation
+import org.sopt.at.presentation.navigation.Screen
+import org.sopt.at.presentation.component.BottomNavigation
 import org.sopt.at.presentation.viewmodel.HomeViewModel
 
 @Composable
@@ -94,7 +95,7 @@ fun HomeScreen(
                         painter = painterResource(R.drawable.my_tiving_icon),
                         contentDescription = "My Profile",
                         modifier = Modifier.size(25.dp)
-                            .clickable { navController.navigate("MyScreen") }
+                            .clickable { navController.navigate(Screen.My.route) }
                     )
                 }
             }

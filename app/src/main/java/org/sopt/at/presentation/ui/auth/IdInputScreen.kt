@@ -1,4 +1,4 @@
-package org.sopt.at.presentation.ui.signup
+package org.sopt.at.presentation.ui.auth
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -30,15 +30,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import org.sopt.at.R
+import org.sopt.at.presentation.navigation.Screen
 import org.sopt.at.presentation.viewmodel.SignUpViewModel
 
 
 @Composable
-fun PasswordInputScreen(
+fun IdInputScreen(
     navController: NavController,
     viewModel: SignUpViewModel
 ){
-    val password by viewModel.password.collectAsState()
+    val userId by viewModel.userId.collectAsState()
 
     Surface (
         color = Color.Black,
@@ -58,7 +59,7 @@ fun PasswordInputScreen(
             )
 
             Text(
-                text = stringResource(R.string.signup_password),
+                text = stringResource(R.string.signup_id),
                 modifier = Modifier.fillMaxWidth(),
                 color = Color.White,
                 fontSize = 25.sp,
@@ -78,9 +79,9 @@ fun PasswordInputScreen(
             )
 
             OutlinedTextField(
-                value = password,
-                onValueChange = { viewModel.onPasswordChange(it) },
-                placeholder = { Text("비밀번호", color = colorResource(R.color.login_textField_text)) },
+                value = userId,
+                onValueChange = { viewModel.onUserIdChange(it)},
+                placeholder = { Text("아이디", color = colorResource(R.color.login_textField_text)) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = textFiledColors,
                 singleLine = true
@@ -99,11 +100,13 @@ fun PasswordInputScreen(
             ){
                 OutlinedButton(
                     onClick = {
-                        navController.navigate("NicknameInputScreen")
+                        // userId를 인자로 pwInput 화면으로 전달
+                        navController.navigate(Screen.PasswordInput.route)
                     },
                     modifier = Modifier.fillMaxWidth().height(50.dp),
                     colors = ButtonDefaults.outlinedButtonColors(
                         containerColor = Color.Transparent,
+
                         ),
                     shape = TextFieldDefaults.shape
                 ) {

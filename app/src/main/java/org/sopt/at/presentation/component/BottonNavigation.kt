@@ -1,4 +1,4 @@
-package org.sopt.at.utils
+package org.sopt.at.presentation.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import org.sopt.at.R
+import org.sopt.at.presentation.navigation.Screen
 
 @Composable
 fun BottomNavigation(navController:NavController){
@@ -44,7 +45,7 @@ fun BottomNavigation(navController:NavController){
                 modifier = Modifier
                     .padding(padding)
                     .clickable {
-                    navController.navigate("HomeView")
+                    navController.navigate(Screen.Home.route)
                 }
             ) {
                 Image(
@@ -65,7 +66,7 @@ fun BottomNavigation(navController:NavController){
                 modifier = Modifier
                     .padding(padding)
                     .clickable {
-                    navController.navigate("ShortsView")
+                    navController.navigate(Screen.Shorts.route)
                 }
             ) {
 
@@ -87,7 +88,7 @@ fun BottomNavigation(navController:NavController){
                 modifier = Modifier
                     .padding(padding)
                     .clickable {
-                    navController.navigate("LiveView")
+                    navController.navigate(Screen.Live.route)
                 }
             ) {
 
@@ -110,7 +111,7 @@ fun BottomNavigation(navController:NavController){
                 modifier = Modifier
                     .padding(padding)
                     .clickable {
-                    navController.navigate("SearchView")
+                    navController.navigate(Screen.Search.route)
                 }
             ) {
 
@@ -133,7 +134,7 @@ fun BottomNavigation(navController:NavController){
                 modifier = Modifier
                     .padding(padding)
                     .clickable {
-                    navController.navigate("HistoryView")
+                    navController.navigate(Screen.History.route)
                 }
             ) {
 

@@ -1,4 +1,4 @@
-package org.sopt.at.presentation.ui.signup
+package org.sopt.at.presentation.ui.auth
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import org.sopt.at.R
+import org.sopt.at.presentation.navigation.Screen
 import org.sopt.at.presentation.viewmodel.SignUpViewModel
 
 @Composable
@@ -101,7 +102,7 @@ fun NicknameInputScreen(
                 OutlinedButton(
                     onClick = {
                         viewModel.signUp(context){
-                            navController.navigate("SignInScreen")
+                            navController.navigate(Screen.SignIn.route)
                         }
                     },
                     modifier = Modifier.fillMaxWidth().height(50.dp),

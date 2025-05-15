@@ -1,4 +1,4 @@
-package org.sopt.at.presentation.ui
+package org.sopt.at.presentation.ui.my
 
 import android.content.Context
 import android.widget.Toast
@@ -35,7 +35,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import org.sopt.at.R
-import org.sopt.at.utils.BottomNavigation
+import org.sopt.at.presentation.navigation.Screen
+import org.sopt.at.presentation.component.BottomNavigation
 import org.sopt.at.presentation.viewmodel.MyViewModel
 
 @Composable
@@ -59,7 +60,7 @@ fun MyScreen(
     LaunchedEffect (isLoggedOut) {
         if(isLoggedOut){
             Toast.makeText(context, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
-            navController.navigate("SignInScreen")
+            navController.navigate(Screen.SignIn.route)
             viewModel.clearLogoutState()
         }
     }
@@ -384,7 +385,7 @@ fun MyScreen(
                         Toast.makeText(context, "로그아웃 되었습니다", Toast.LENGTH_SHORT).show()
 
                         // 로그인 화면으로 이동
-                        navController.navigate("SignInScreen")
+                        navController.navigate(Screen.SignIn.route)
                     },
                     colors = ButtonDefaults.outlinedButtonColors(
                         containerColor = Color.Transparent

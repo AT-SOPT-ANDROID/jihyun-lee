@@ -1,6 +1,5 @@
-package org.sopt.at.presentation.ui
+package org.sopt.at.presentation.ui.auth
 
-import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -44,14 +43,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import org.sopt.at.R
+import org.sopt.at.presentation.navigation.Screen
 import org.sopt.at.presentation.viewmodel.SignInViewModel
-
-fun getUserInfo(context: Context): Pair<String?, String?> {
-    val sharedPref = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
-    val userId = sharedPref.getString("userId", null)  // null은 기본값
-    val password = sharedPref.getString("password", null)  // null은 기본값
-    return Pair(userId, password)  // Pair로 반환하여 사용할 수 있음
-}
 
 @Composable
 fun SignInScreen(
@@ -71,7 +64,7 @@ fun SignInScreen(
 
     LaunchedEffect(loginSuccess) {
         if (loginSuccess) {
-            navController.navigate("MyScreen") {
+            navController.navigate(Screen.My.route) {
                 popUpTo("SignInScreen") { inclusive = true }
             }
         }
@@ -205,7 +198,7 @@ fun SignInScreen(
                         color = colorResource(textColor),
                         fontSize = textSize,
                         modifier = Modifier.clickable {
-                            navController.navigate("IdInputScreen")
+                            navController.navigate(Screen.IdInput.route)
                         }
                     )
                 }
@@ -223,7 +216,7 @@ fun SignInScreen(
     LaunchedEffect(loginSuccess) {
         if(loginSuccess){
             snackbarHostState.showSnackbar("로그인 성공")
-            navController.navigate("MyScreen/${userId}")
+            navController.navigate(Screen.My.route)
             viewModel.clearLoginResult()
         }
     }

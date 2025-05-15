@@ -1,4 +1,4 @@
-package org.sopt.at.presentation.ui
+package org.sopt.at.presentation.ui.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
-import org.sopt.at.utils.BottomNavigation
+import org.sopt.at.presentation.component.BottomNavigation
 
 @Composable
 fun SearchScreen(navController: NavController){

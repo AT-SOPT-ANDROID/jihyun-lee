@@ -5,10 +5,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import org.sopt.at.presentation.ui.SignInScreen
-import org.sopt.at.presentation.ui.signup.IdInputScreen
-import org.sopt.at.presentation.ui.signup.NicknameInputScreen
-import org.sopt.at.presentation.ui.signup.PasswordInputScreen
+import org.sopt.at.presentation.ui.auth.SignInScreen
+import org.sopt.at.presentation.ui.auth.IdInputScreen
+import org.sopt.at.presentation.ui.auth.NicknameInputScreen
+import org.sopt.at.presentation.ui.auth.PasswordInputScreen
 import org.sopt.at.presentation.viewmodel.SignUpViewModel
 
 fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
