@@ -1,4 +1,4 @@
-package org.sopt.at.viewmodel
+package org.sopt.at.presentation.viewmodel
 
 import android.content.Context
 import android.widget.Toast
@@ -10,10 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.sopt.at.data.model.RequestSignInDto
 import org.sopt.at.domain.repository.SignInRepository
-import org.sopt.at.domain.repository.SignUpRepository
-import org.sopt.at.presentation.signin.getUserInfo
 import javax.inject.Inject
-import androidx.core.content.edit
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(

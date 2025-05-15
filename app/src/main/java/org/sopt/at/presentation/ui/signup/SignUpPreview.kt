@@ -1,4 +1,4 @@
-package org.sopt.at.presentation.signup
+package org.sopt.at.presentation.ui.signup
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview

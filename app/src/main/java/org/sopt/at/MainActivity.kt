@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import org.sopt.at.navigation.RootNavGraph
+import org.sopt.at.presentation.navigation.RootNavGraph
 import org.sopt.at.ui.theme.ATSOPTANDROIDTheme
 
 @AndroidEntryPoint

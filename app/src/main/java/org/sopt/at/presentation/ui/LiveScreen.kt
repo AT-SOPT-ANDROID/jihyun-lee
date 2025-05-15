@@ -1,4 +1,4 @@
-package org.sopt.at.presentation.search
+package org.sopt.at.presentation.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -11,14 +11,14 @@ import androidx.navigation.NavController
 import org.sopt.at.utils.BottomNavigation
 
 @Composable
-fun SearchScreen(navController: NavController){
+fun LiveScreen(navController: NavController){
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(color = Color.Black)
     ){
         Text(
-            text = "Search Screen"
+            text = "Live Screen"
         )
         BottomNavigation(navController = navController)
     }

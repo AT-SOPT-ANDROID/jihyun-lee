@@ -1,4 +1,4 @@
-package org.sopt.at.presentation.home
+package org.sopt.at.presentation.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -43,7 +43,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import org.sopt.at.R
 import org.sopt.at.utils.BottomNavigation
-import org.sopt.at.viewmodel.HomeViewModel
+import org.sopt.at.presentation.viewmodel.HomeViewModel
 
 @Composable
 fun HomeScreen(

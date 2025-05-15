@@ -1,4 +1,4 @@
-package org.sopt.at.presentation.signup
+package org.sopt.at.presentation.ui.signup
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -31,15 +31,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import org.sopt.at.R
-import org.sopt.at.viewmodel.SignUpViewModel
-
+import org.sopt.at.presentation.viewmodel.SignUpViewModel
 
 @Composable
-fun PasswordInputScreen(
+fun NicknameInputScreen(
     navController: NavController,
     viewModel: SignUpViewModel
 ){
-    val password by viewModel.password.collectAsState()
+    val nickname by viewModel.nickname.collectAsState()
+    val context = LocalContext.current
 
     Surface (
         color = Color.Black,
@@ -59,7 +59,7 @@ fun PasswordInputScreen(
             )
 
             Text(
-                text = stringResource(R.string.signup_password),
+                text = stringResource(R.string.signup_nickname),
                 modifier = Modifier.fillMaxWidth(),
                 color = Color.White,
                 fontSize = 25.sp,
@@ -79,9 +79,9 @@ fun PasswordInputScreen(
             )
 
             OutlinedTextField(
-                value = password,
-                onValueChange = { viewModel.onPasswordChange(it) },
-                placeholder = { Text("비밀번호", color = colorResource(R.color.login_textField_text)) },
+                value = nickname,
+                onValueChange = { viewModel.onNicknameChange(it) },
+                placeholder = { Text("닉네임", color = colorResource(R.color.login_textField_text)) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = textFiledColors,
                 singleLine = true
@@ -89,10 +89,10 @@ fun PasswordInputScreen(
 
             Spacer(modifier = Modifier.padding(10.dp))
 
-            Text(
-                text = "영문 소문자 또는 영문 소문자, 숫자 조합 6~12 자리",
-                color = colorResource(R.color.login_text)
-            )
+//            Text(
+//                text = "영문 소문자 또는 영문 소문자, 숫자 조합 6~12 자리",
+//                color = colorResource(R.color.login_text)
+//            )
 
             Box(
                 modifier = Modifier.fillMaxSize(),
@@ -100,11 +100,14 @@ fun PasswordInputScreen(
             ){
                 OutlinedButton(
                     onClick = {
-                        navController.navigate("NicknameInputScreen")
+                        viewModel.signUp(context){
+                            navController.navigate("SignInScreen")
+                        }
                     },
                     modifier = Modifier.fillMaxWidth().height(50.dp),
                     colors = ButtonDefaults.outlinedButtonColors(
                         containerColor = Color.Transparent,
+
                         ),
                     shape = TextFieldDefaults.shape
                 ) {

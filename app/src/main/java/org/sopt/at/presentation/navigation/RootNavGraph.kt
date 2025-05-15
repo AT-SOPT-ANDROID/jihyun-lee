@@ -1,4 +1,4 @@
-package org.sopt.at.navigation
+package org.sopt.at.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -9,17 +9,9 @@ import androidx.navigation.compose.composable
 
 @Composable
 fun RootNavGraph(navController: NavHostController){
-    NavHost(navController = navController, startDestination = "start") {
-        composable("start"){
-            LaunchedEffect(Unit) {
-                navController.navigate("SignInScreen") {
-                    popUpTo("start") { inclusive = true }
-                }
-            }
-        }
-        signinNavGraph(navController)
+    NavHost(navController = navController, startDestination = Screen.SignIn.route) {
+        authNavGraph(navController)
         homeNavGraph(navController)
-        signupNavGraph(navController)
         myNavGraph(navController)
     }
 }

@@ -1,4 +1,4 @@
-package org.sopt.at.presentation.my
+package org.sopt.at.presentation.ui
 
 import android.content.Context
 import android.widget.Toast
@@ -36,7 +36,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import org.sopt.at.R
 import org.sopt.at.utils.BottomNavigation
-import org.sopt.at.viewmodel.MyViewModel
+import org.sopt.at.presentation.viewmodel.MyViewModel
 
 @Composable
 fun MyScreen(

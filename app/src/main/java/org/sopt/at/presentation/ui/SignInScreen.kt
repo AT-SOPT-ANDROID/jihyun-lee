@@ -1,4 +1,4 @@
-package org.sopt.at.presentation.signin
+package org.sopt.at.presentation.ui
 
 import android.content.Context
 import androidx.compose.foundation.Image
@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -43,10 +42,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import org.sopt.at.R
-import org.sopt.at.viewmodel.SignInViewModel
+import org.sopt.at.presentation.viewmodel.SignInViewModel
 
 fun getUserInfo(context: Context): Pair<String?, String?> {
     val sharedPref = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
@@ -55,7 +53,6 @@ fun getUserInfo(context: Context): Pair<String?, String?> {
     return Pair(userId, password)  // Pair로 반환하여 사용할 수 있음
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignInScreen(
     navController: NavController,

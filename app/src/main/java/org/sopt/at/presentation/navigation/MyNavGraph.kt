@@ -1,10 +1,10 @@
-package org.sopt.at.navigation
+package org.sopt.at.presentation.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import org.sopt.at.presentation.my.MyScreen
+import org.sopt.at.presentation.ui.MyScreen
 
 fun NavGraphBuilder.myNavGraph(navController: NavHostController) {
-    composable("MyScreen") { MyScreen(navController) }
+    composable(Screen.My.route) { MyScreen(navController) }
 }
