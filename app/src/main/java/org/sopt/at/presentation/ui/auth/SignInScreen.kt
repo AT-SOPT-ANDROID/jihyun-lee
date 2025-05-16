@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -43,6 +41,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import org.sopt.at.R
+import org.sopt.at.presentation.component.CustomButton
 import org.sopt.at.presentation.navigation.Screen
 import org.sopt.at.presentation.viewmodel.SignInViewModel
 
@@ -145,22 +144,15 @@ fun SignInScreen(
 
                 Spacer(modifier = Modifier.padding(15.dp))
 
-                Button(
+                CustomButton(
+                    text = "로그인하기",
                     onClick = {
                         viewModel.login(context)
                     },
-                    modifier = Modifier.fillMaxWidth().height(50.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(R.color.login_button)
-                    ),
-                    shape = TextFieldDefaults.shape
-                ) {
-                    Text(
-                        text = "로그인하기",
-                        color = colorResource(R.color.login_button_text),
-                        fontWeight = FontWeight.Bold,
-                    )
-                }
+                    containerColor = colorResource(R.color.login_button),
+                    showBorder = false,
+                    textColor = colorResource(R.color.login_button_text)
+                )
 
                 Spacer(modifier = Modifier.padding(20.dp))
 

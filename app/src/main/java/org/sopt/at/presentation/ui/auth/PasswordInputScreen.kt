@@ -6,11 +6,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -30,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import org.sopt.at.R
+import org.sopt.at.presentation.component.CustomButton
 import org.sopt.at.presentation.navigation.Screen
 import org.sopt.at.presentation.viewmodel.SignUpViewModel
 
@@ -98,23 +96,15 @@ fun PasswordInputScreen(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.BottomCenter
             ){
-                OutlinedButton(
+                CustomButton(
+                    text = "다음",
                     onClick = {
                         navController.navigate(Screen.NicknameInput.route)
                     },
-                    modifier = Modifier.fillMaxWidth().height(50.dp),
-                    colors = ButtonDefaults.outlinedButtonColors(
-                        containerColor = Color.Transparent,
-                        ),
-                    shape = TextFieldDefaults.shape
-                ) {
-                    Text(
-                        text = "다음",
-                        color = colorResource(R.color.login_menu_text),
-                        fontWeight = FontWeight.Bold
-                    )
-                }
+                    textColor = colorResource(R.color.login_menu_text)
+                )
             }
+
             Spacer(modifier = Modifier.padding(20.dp))
         }
     }

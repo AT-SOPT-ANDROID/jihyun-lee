@@ -37,6 +37,7 @@ import androidx.navigation.NavController
 import org.sopt.at.R
 import org.sopt.at.presentation.navigation.Screen
 import org.sopt.at.presentation.component.BottomNavigation
+import org.sopt.at.presentation.component.CustomButton
 import org.sopt.at.presentation.viewmodel.MyViewModel
 
 @Composable
@@ -373,8 +374,9 @@ fun MyScreen(
                     )
                 }
 
-                val context = LocalContext.current
-                OutlinedButton(
+                CustomButton(
+                    text = "로그아웃",
+                    textColor = colorResource(R.color.my_text),
                     onClick = {
                         // 로그인 정보 제거
                         val sharedPref = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
@@ -386,18 +388,8 @@ fun MyScreen(
 
                         // 로그인 화면으로 이동
                         navController.navigate(Screen.SignIn.route)
-                    },
-                    colors = ButtonDefaults.outlinedButtonColors(
-                        containerColor = Color.Transparent
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-                    Text(
-                        text = "로그아웃",
-                        color = colorResource(R.color.my_text)
-                    )
-                }
+                    }
+                )
             }
             BottomNavigation(navController)
         }
