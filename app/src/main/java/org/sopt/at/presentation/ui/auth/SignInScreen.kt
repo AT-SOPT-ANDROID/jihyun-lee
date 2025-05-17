@@ -12,11 +12,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -33,8 +31,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -42,6 +38,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import org.sopt.at.R
 import org.sopt.at.presentation.component.CustomButton
+import org.sopt.at.presentation.component.SignInTextField
 import org.sopt.at.presentation.navigation.Screen
 import org.sopt.at.presentation.viewmodel.SignInViewModel
 
@@ -66,6 +63,20 @@ fun SignInScreen(
             navController.navigate(Screen.My.route) {
                 popUpTo("SignInScreen") { inclusive = true }
             }
+        }
+    }
+    LaunchedEffect(loginSuccess) {
+        if(loginSuccess){
+            snackbarHostState.showSnackbar("로그인 성공")
+            navController.navigate(Screen.My.route)
+            viewModel.clearLoginResult()
+        }
+    }
+    // 로그인 실패 시 Snackbar 표시
+    LaunchedEffect(loginError) {
+        if (loginError) {
+            snackbarHostState.showSnackbar("로그인 실패! 아이디와 비밀번호를 확인해주세요.")
+            viewModel.clearLoginResult()
         }
     }
 
@@ -101,35 +112,16 @@ fun SignInScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                val textFieldModifier = Modifier.fillMaxWidth()
-                val textFiledColors = TextFieldDefaults.colors(
-                    unfocusedContainerColor = colorResource(R.color.login_textField_background),
-                    unfocusedIndicatorColor = Color.Transparent,
-                    focusedContainerColor = colorResource(R.color.login_textField_background),
-                    focusedIndicatorColor = colorResource(R.color.login_menu_text),
-                    focusedTextColor = colorResource(R.color.login_menu_text),
-                    unfocusedTextColor = colorResource(R.color.login_menu_text)
-                )
-                OutlinedTextField(
+                SignInTextField(
                     value = userId,
-                    onValueChange = {
-                        viewModel.onUserIdChange(it)
-                    },
-                    placeholder = {Text("아이디", color = colorResource(R.color.login_textField_text))},
-                    modifier = textFieldModifier,
-                    colors = textFiledColors,
-                    singleLine = true
+                    onValueChange = { viewModel.onUserIdChange(it) },
+                    placeholderText = "아이디"
                 )
                 Spacer(modifier = Modifier.padding(10.dp))
-                OutlinedTextField(
+                SignInTextField(
                     value = password,
-                    onValueChange = {
-                        viewModel.onPasswordChange(it)
-                    },
-                    placeholder = { Text("비밀번호", color = colorResource(R.color.login_textField_text)) },
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = textFiledColors,
-                    singleLine = true,
+                    onValueChange = { viewModel.onPasswordChange(it) },
+                    placeholderText = "비밀번호",
                     trailingIcon = {
                         IconButton(onClick = { passwordVisible = !passwordVisible }) {
                             Icon(
@@ -138,8 +130,7 @@ fun SignInScreen(
                                 modifier = Modifier.size(20.dp)
                             )
                         }
-                    },
-                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation()
+                    }
                 )
 
                 Spacer(modifier = Modifier.padding(15.dp))
@@ -203,20 +194,6 @@ fun SignInScreen(
                     fontSize = 13.sp
                 )
             }
-        }
-    }
-    LaunchedEffect(loginSuccess) {
-        if(loginSuccess){
-            snackbarHostState.showSnackbar("로그인 성공")
-            navController.navigate(Screen.My.route)
-            viewModel.clearLoginResult()
-        }
-    }
-    // 로그인 실패 시 Snackbar 표시
-    LaunchedEffect(loginError) {
-        if (loginError) {
-            snackbarHostState.showSnackbar("로그인 실패! 아이디와 비밀번호를 확인해주세요.")
-            viewModel.clearLoginResult()
         }
     }
 }

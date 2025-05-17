@@ -8,10 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -29,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import org.sopt.at.R
 import org.sopt.at.presentation.component.CustomButton
+import org.sopt.at.presentation.component.SignInTextField
 import org.sopt.at.presentation.navigation.Screen
 import org.sopt.at.presentation.viewmodel.SignUpViewModel
 
@@ -68,30 +67,13 @@ fun NicknameInputScreen(
 
             Spacer(modifier = Modifier.padding(20.dp))
 
-            val textFiledColors = TextFieldDefaults.colors(
-                unfocusedContainerColor = colorResource(R.color.login_textField_background),
-                unfocusedIndicatorColor = Color.Transparent,
-                focusedContainerColor = colorResource(R.color.login_textField_background),
-                focusedIndicatorColor = colorResource(R.color.login_menu_text),
-                focusedTextColor = colorResource(R.color.login_menu_text),
-                unfocusedTextColor = colorResource(R.color.login_menu_text)
-            )
-
-            OutlinedTextField(
+            SignInTextField(
                 value = nickname,
                 onValueChange = { viewModel.onNicknameChange(it) },
-                placeholder = { Text("닉네임", color = colorResource(R.color.login_textField_text)) },
-                modifier = Modifier.fillMaxWidth(),
-                colors = textFiledColors,
-                singleLine = true
+                placeholderText = "닉네임"
             )
 
             Spacer(modifier = Modifier.padding(10.dp))
-
-//            Text(
-//                text = "영문 소문자 또는 영문 소문자, 숫자 조합 6~12 자리",
-//                color = colorResource(R.color.login_text)
-//            )
 
             Box(
                 modifier = Modifier.fillMaxSize(),
